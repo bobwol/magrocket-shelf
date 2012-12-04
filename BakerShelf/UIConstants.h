@@ -33,25 +33,37 @@
 #ifndef Baker_UIConstants_h
 #define Baker_UIConstants_h
 
-    // Change the colors of individual elements on the Issue display.
-    // You can change the Issue Title label color, Info Label Color, Button Colors, Loading Label Color and Spinner Color
-    #define ISSUES_TITLE_LABEL_COLOR @"#FFFFFF"
-    #define ISSUES_INFO_LABEL_COLOR @"#FFFFFF"
-    #define ISSUES_BUTTON_COLOR @"#0069ae"
-    #define ISSUES_BUTTON_TEXT_COLOR @"#FFFFFF"
-    #define ISSUES_ARCHIVE_TEXT_COLOR @"#0069ae"
-    #define ISSUES_LOADING_LABEL_COLOR @"#FFFFFF"
-    #define ISSUES_LOADING_SPINNER_COLOR @"#FFFFFF"
-    #define ISSUES_PROGRESSBAR_TINT_COLOR @"0069ae"
-    #define INFO_VIEW_BUTTON_COLOR @"#0069ae"
-    #define INFO_VIEW_BUTTON_TEXT_COLOR @"#FFFFFF"
-
-    // Fonts for Issues
+    // Title for issues in the shelf
     #define ISSUES_TITLE_FONT @"Helvetica-Bold"
     #define ISSUES_TITLE_FONT_SIZE 15
+    #define ISSUES_TITLE_COLOR @"#FFFFFF"
+
+    // Info text for issues in the shelf
     #define ISSUES_INFO_FONT @"Helvetica"
     #define ISSUES_INFO_FONT_SIZE 14
-    #define ISSUES_ACTION_FONT @"Helvetica-Bold"
-    #define ISSUES_ACTION_FONT_SIZE 11
+    #define ISSUES_INFO_COLOR @"#FFFFFF"
+
+    // Download/read button for issues in the shelf
+    #define ISSUES_ACTION_BUTTON_FONT @"Helvetica-Bold"
+    #define ISSUES_ACTION_BUTTON_FONT_SIZE 11
+    #define ISSUES_ACTION_BUTTON_BACKGROUND_COLOR @"#0069ae"
+    #define ISSUES_ACTION_BUTTON_COLOR @"#FFFFFF"
+
+    // Archive button for issues in the shelf
+    #define ISSUES_ARCHIVE_BUTTON_FONT @"Helvetica-Bold"
+    #define ISSUES_ARCHIVE_BUTTON_FONT_SIZE 11
+    #define ISSUES_ARCHIVE_BUTTON_COLOR @"#0069ae"
+    #define ISSUES_ARCHIVE_BUTTON_BACKGROUND_COLOR @"FFFFFF"
+
+    // Text and spinner for issues that are being loaded in the shelf
+    #define ISSUES_LOADING_LABEL_COLOR @"#FFFFFF"
+    #define ISSUES_LOADING_SPINNER_COLOR @"#FFFFFF"
+
+    // Progress bar for issues that are being downloaded in the shelf
+    #define ISSUES_PROGRESSBAR_TINT_COLOR @"0069ae"
+
+    // Info Modal Popup
+    #define INFO_VIEW_BUTTON_COLOR @"#0069ae"
+    #define INFO_VIEW_BUTTON_TEXT_COLOR @"#FFFFFF"
 
 #endif

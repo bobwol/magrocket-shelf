@@ -132,15 +132,6 @@
                              action:@selector(handleFreeSubscription:)]
                             autorelease];
     
-    UIImage *infoButtonImage = [UIImage imageNamed:@"info-icon.png"];
-    
-    self.infoButton = [[[UIBarButtonItem alloc]
-                        initWithImage:infoButtonImage
-                        style: UIBarButtonItemStylePlain
-                        target:self
-                        action:@selector(handleInfo:)]
-                       autorelease];
-
     if ([PRODUCT_ID_FREE_SUBSCRIPTION length] == 0) {
         self.subscribeButton.enabled = NO;
         NSLog(@"Subscription not enabled: constant PRODUCT_ID_FREE_SUBSCRIPTION not set");
@@ -151,11 +142,23 @@
                                               self.subscribeButton,
                                               nil];
     
-    self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:
-                                               self.infoButton,
-                                               nil];
+        #ifdef INFO_VIEW
+            UIImage *infoButtonImage = [UIImage imageNamed:@"info-icon.png"];
+            
+            self.infoButton = [[[UIBarButtonItem alloc]
+                                initWithImage:infoButtonImage
+                                style: UIBarButtonItemStylePlain
+                                target:self
+                                action:@selector(handleInfo:)]
+                               autorelease];
+            
+            self.navigationItem.rightBarButtonItems = [NSArray arrayWithObjects:
+                                                       self.infoButton,
+                                                       nil];
+        #endif
+    
     #endif
-        
+    
     #ifdef GOOGLE_ANALYTICS
         [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Shelf Load"
                                                          withAction:nil
