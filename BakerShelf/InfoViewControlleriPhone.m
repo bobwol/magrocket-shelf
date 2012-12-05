@@ -20,6 +20,9 @@
 @synthesize dismissViewButtonPortrait;
 @synthesize dismissViewButtonLandscape;
 
+@synthesize webViewPortrait;
+@synthesize webViewLandscape;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -42,6 +45,34 @@
     [dismissViewButtonPortrait setTitleColor:[UIColor colorWithHexString:INFO_VIEW_BUTTON_TEXT_COLOR] forState:UIControlStateNormal];
     [dismissViewButtonLandscape setBackgroundColor:[UIColor colorWithHexString:INFO_VIEW_BUTTON_COLOR]];
     [dismissViewButtonLandscape setTitleColor:[UIColor colorWithHexString:INFO_VIEW_BUTTON_TEXT_COLOR] forState:UIControlStateNormal];
+    
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle]pathForResource:@"info.html" ofType:nil]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [webViewLandscape loadRequest:request];
+    [webViewPortrait loadRequest:request];
+    
+    self.webViewPortrait.delegate = self;
+    self.webViewLandscape.delegate = self;
+    self.webViewPortrait.scrollView.delegate = self;
+    self.webViewLandscape.scrollView.delegate = self;
+    
+    [webViewPortrait.scrollView setShowsHorizontalScrollIndicator:NO];
+    [webViewLandscape.scrollView setShowsHorizontalScrollIndicator:NO];
+}
+
+-(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
+    if ( inType == UIWebViewNavigationTypeLinkClicked ) {
+        [[UIApplication sharedApplication] openURL:[inRequest URL]];
+        return NO;
+    }
+    
+    return YES;
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.x > 0)
+        scrollView.contentOffset = CGPointMake(0, scrollView.contentOffset.y);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -58,6 +89,9 @@
 - (void)dealloc {
 	[dismissViewButtonPortrait release];
     [dismissViewButtonLandscape release];
+    [webViewLandscape release];
+    [webViewPortrait release];
+    
     [super dealloc];
 }
 

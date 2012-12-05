@@ -13,8 +13,8 @@
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
 			<string>IBUIButton</string>
-			<string>IBUILabel</string>
 			<string>IBUIView</string>
+			<string>IBUIWebView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -39,10 +39,10 @@
 					<object class="IBUIButton" id="166159656">
 						<reference key="NSNextResponder" ref="866179080"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{427, 20}, {82, 30}}</string>
+						<string key="NSFrame">{{438, 20}, {82, 30}}</string>
 						<reference key="NSSuperview" ref="866179080"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="502641017"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -70,37 +70,19 @@
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
-					<object class="IBUILabel" id="502641017">
+					<object class="IBUIWebView" id="683493024">
 						<reference key="NSNextResponder" ref="866179080"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{72, 299}, {397, 21}}</string>
+						<string key="NSFrame">{{20, 63}, {500, 537}}</string>
 						<reference key="NSSuperview" ref="866179080"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="IBUIOpaque">NO</bool>
-						<bool key="IBUIClipsSubviews">YES</bool>
-						<int key="IBUIContentMode">7</int>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">DESIGN YOUR INFO SCREEN</string>
-						<object class="NSColor" key="IBUITextColor" id="481727252">
+						<object class="NSColor" key="IBUIBackgroundColor" id="640953907">
 							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAAA</bytes>
-							<string key="IBUIColorCocoaTouchKeyPath">darkTextColor</string>
+							<bytes key="NSRGB">MSAxIDEAA</bytes>
 						</object>
-						<nil key="IBUIHighlightedColor"/>
-						<int key="IBUIBaselineAdjustment">0</int>
-						<int key="IBUITextAlignment">1</int>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="795701972">
-							<int key="type">1</int>
-							<double key="pointSize">17</double>
-						</object>
-						<object class="NSFont" key="IBUIFont" id="310913778">
-							<string key="NSName">Helvetica</string>
-							<double key="NSSize">17</double>
-							<int key="NSfFlags">16</int>
-						</object>
-						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+						<int key="IBUIDataDetectorTypes">2</int>
 					</object>
 				</array>
 				<string key="NSFrameSize">{540, 620}</string>
@@ -147,7 +129,7 @@
 						<string key="NSFrame">{{438, 20}, {82, 30}}</string>
 						<reference key="NSSuperview" ref="375429143"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="834634853"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -163,26 +145,16 @@
 						<reference key="IBUIFontDescription" ref="661206713"/>
 						<reference key="IBUIFont" ref="724510254"/>
 					</object>
-					<object class="IBUILabel" id="834634853">
+					<object class="IBUIWebView" id="838249988">
 						<reference key="NSNextResponder" ref="375429143"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{72, 299}, {397, 21}}</string>
+						<string key="NSFrame">{{20, 63}, {500, 537}}</string>
 						<reference key="NSSuperview" ref="375429143"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
-						<bool key="IBUIOpaque">NO</bool>
-						<bool key="IBUIClipsSubviews">YES</bool>
-						<int key="IBUIContentMode">7</int>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<reference key="IBUIBackgroundColor" ref="640953907"/>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">DESIGN YOUR INFO SCREEN</string>
-						<reference key="IBUITextColor" ref="481727252"/>
-						<nil key="IBUIHighlightedColor"/>
-						<int key="IBUIBaselineAdjustment">0</int>
-						<int key="IBUITextAlignment">1</int>
-						<reference key="IBUIFontDescription" ref="795701972"/>
-						<reference key="IBUIFont" ref="310913778"/>
-						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+						<int key="IBUIDataDetectorTypes">2</int>
 					</object>
 				</array>
 				<string key="NSFrameSize">{540, 620}</string>
@@ -242,6 +214,22 @@
 					<int key="connectionID">23</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">webViewPortrait</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="838249988"/>
+					</object>
+					<int key="connectionID">49</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">webViewLandscape</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="683493024"/>
+					</object>
+					<int key="connectionID">50</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">dismissView:</string>
 						<reference key="source" ref="885328612"/>
@@ -284,16 +272,10 @@
 						<reference key="object" ref="375429143"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="885328612"/>
-							<reference ref="834634853"/>
+							<reference ref="838249988"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">mainPortraitView</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">4</int>
-						<reference key="object" ref="834634853"/>
-						<array class="NSMutableArray" key="children"/>
-						<reference key="parent" ref="375429143"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">7</int>
@@ -305,8 +287,8 @@
 						<int key="objectID">14</int>
 						<reference key="object" ref="866179080"/>
 						<array class="NSMutableArray" key="children">
+							<reference ref="683493024"/>
 							<reference ref="166159656"/>
-							<reference ref="502641017"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">mainLandscapeView</string>
@@ -318,10 +300,14 @@
 						<reference key="parent" ref="866179080"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">18</int>
-						<reference key="object" ref="502641017"/>
-						<array class="NSMutableArray" key="children"/>
+						<int key="objectID">41</int>
+						<reference key="object" ref="683493024"/>
 						<reference key="parent" ref="866179080"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">42</int>
+						<reference key="object" ref="838249988"/>
+						<reference key="parent" ref="375429143"/>
 					</object>
 				</array>
 			</object>
@@ -334,8 +320,8 @@
 				<string key="14.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="17.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="0.0" key="17.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
-				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="41.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="42.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="0.0" key="7.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 			</dictionary>
@@ -343,7 +329,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">40</int>
+			<int key="maxID">50</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -364,6 +350,8 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="dismissViewButtonLandscape">UIButton</string>
 						<string key="dismissViewButtonPortrait">UIButton</string>
+						<string key="webViewLandscape">UIWebView</string>
+						<string key="webViewPortrait">UIWebView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="dismissViewButtonLandscape">
@@ -373,6 +361,14 @@
 						<object class="IBToOneOutletInfo" key="dismissViewButtonPortrait">
 							<string key="name">dismissViewButtonPortrait</string>
 							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="webViewLandscape">
+							<string key="name">webViewLandscape</string>
+							<string key="candidateClassName">UIWebView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="webViewPortrait">
+							<string key="name">webViewPortrait</string>
+							<string key="candidateClassName">UIWebView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
