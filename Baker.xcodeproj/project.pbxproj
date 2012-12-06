@@ -232,7 +232,7 @@
 		AB5CEB59161E4081008B4943 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		AB5D48CD1609176A00828D16 /* NewsstandKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NewsstandKit.framework; path = System/Library/Frameworks/NewsstandKit.framework; sourceTree = SDKROOT; };
 		ABABF1A51646C04D00A75E67 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		ABAFB58715AB9A2E002FA498 /* Baker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Baker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABAFB58715AB9A2E002FA498 /* MagRocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MagRocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABAFB58B15AB9A2E002FA498 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		ABAFB58D15AB9A2E002FA498 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		ABAFB58F15AB9A2E002FA498 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -532,7 +532,7 @@
 		ABAFB58815AB9A2E002FA498 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ABAFB58715AB9A2E002FA498 /* Baker.app */,
+				ABAFB58715AB9A2E002FA498 /* MagRocket.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -602,9 +602,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		ABAFB58615AB9A2E002FA498 /* Baker */ = {
+		ABAFB58615AB9A2E002FA498 /* MagRocket */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ABAFB5B415AB9A2F002FA498 /* Build configuration list for PBXNativeTarget "Baker" */;
+			buildConfigurationList = ABAFB5B415AB9A2F002FA498 /* Build configuration list for PBXNativeTarget "MagRocket" */;
 			buildPhases = (
 				ABAFB58315AB9A2E002FA498 /* Sources */,
 				ABAFB58415AB9A2E002FA498 /* Frameworks */,
@@ -614,9 +614,9 @@
 			);
 			dependencies = (
 			);
-			name = Baker;
+			name = MagRocket;
 			productName = Baker;
-			productReference = ABAFB58715AB9A2E002FA498 /* Baker.app */;
+			productReference = ABAFB58715AB9A2E002FA498 /* MagRocket.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -639,7 +639,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				ABAFB58615AB9A2E002FA498 /* Baker */,
+				ABAFB58615AB9A2E002FA498 /* MagRocket */,
 			);
 		};
 /* End PBXProject section */
@@ -847,7 +847,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ABAFB5B415AB9A2F002FA498 /* Build configuration list for PBXNativeTarget "Baker" */ = {
+		ABAFB5B415AB9A2F002FA498 /* Build configuration list for PBXNativeTarget "MagRocket" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ABAFB5B515AB9A2F002FA498 /* Debug */,

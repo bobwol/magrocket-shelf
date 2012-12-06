@@ -55,7 +55,7 @@
         // Mandatory - This constant identifies the subscription you set up in iTunesConnect.
         // See: iTunes Connect -> Manage Your Application -> (Your application) -> Manage In App Purchases
         // E.g. @"com.example.MyBook.subscription.free"
-        #define PRODUCT_ID_FREE_SUBSCRIPTION @"com.nin9creative.bakershelf.sub.free"
+        #define PRODUCT_ID_FREE_SUBSCRIPTION @"com.nin9creative.magrocket.sub.free"
 
         // ----------------------------------------------------------------------------------------------------
         // Optional - This constant specifies the URL to ping back when a user subscribes.
