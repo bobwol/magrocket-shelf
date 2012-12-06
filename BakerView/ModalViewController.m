@@ -93,7 +93,10 @@
 
 
     // ****** Buttons
-    UIBarButtonItem *btnClose  = [[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:self action:@selector(dismissAction)] autorelease];
+    UIBarButtonItem *btnClose = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"WEB_MODAL_CLOSE_BUTTON_TEXT", nil)
+                                                                  style:UIBarButtonItemStyleBordered
+                                                                 target:self
+                                                                 action:@selector(dismissAction)] autorelease];
     UIBarButtonItem *btnAction = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(openInSafari)] autorelease];
 
     self.btnGoBack = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back.png"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)] autorelease];
@@ -114,17 +117,27 @@
     btnSpinner.width = 30;
 
     UIBarButtonItem *spacer = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-
-
+   
     // ****** Add Toolbar
     self.toolbar = [[UIToolbar new] autorelease];
-    toolbar.barStyle = UIBarStyleDefault;
-
+    toolbar.barStyle = UIBarStyleBlackTranslucent;
+    
+    [[UIDevice currentDevice] systemVersion];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] > 4.9) {
+        //iOS 5
+        UIImage *toolBarIMG = [UIImage imageNamed: @"navigation-bar-bg.png"];
+        
+        if ([toolbar respondsToSelector:@selector(setBackgroundImage:forToolbarPosition:barMetrics:)]) {
+            [toolbar setBackgroundImage:toolBarIMG forToolbarPosition:0 barMetrics:0];
+        }
+    } else {
+        //iOS 4
+        [toolbar insertSubview:[[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navigation-bar-bg.png"]] autorelease] atIndex:0];
+    }
 
     // ****** Add items to toolbar
     NSArray *items = [NSArray arrayWithObjects: btnClose, btnGoBack, btnGoForward, btnSpinner, spacer, btnAction, nil];
     [toolbar setItems:items animated:NO];
-
 
     // ****** Add WebView
     self.webView = [[[UIWebView alloc] initWithFrame:CGRectMake(0, 44, 1, 1)] autorelease];
@@ -133,15 +146,12 @@
     webView.scalesPageToFit = YES;
     webView.delegate = self;
 
-
     // ****** View
     self.view = [UIView new];
-
 
     // ****** Attach
     [self.view addSubview:toolbar];
     [self.view addSubview:webView];
-
 
     // ****** Set views starting frames according to current interface rotation
     [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0];

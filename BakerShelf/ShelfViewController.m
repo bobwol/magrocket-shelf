@@ -237,7 +237,7 @@
 
 - (NSUInteger)numberOfItemsInGridView:(AQGridView *)aGridView
 {
-    return [issues count];
+    return [issueViewControllers count];
 }
 - (AQGridViewCell *)gridView:(AQGridView *)aGridView cellForItemAtIndex:(NSUInteger)index
 {
@@ -272,23 +272,30 @@
 #ifdef BAKER_NEWSSTAND
 - (void)handleRefresh:(NSNotification *)notification {
     [self setrefreshButtonEnabled:NO];
-
+    
     if (!self.issuesManager) {
         self.issuesManager = [[[IssuesManager alloc] initWithURL:NEWSSTAND_MANIFEST_URL] autorelease];
     }
-    [self.issuesManager refresh];
-    self.issues = issuesManager.issues;
-
-    [self.issues enumerateObjectsUsingBlock:^(id object, NSUInteger idx, BOOL *stop) {
-        IssueViewController *existingIvc = [self.issueViewControllers objectAtIndex:idx];
-        BakerIssue *issue = (BakerIssue*)object;
-        if (![[existingIvc issue].ID isEqualToString:issue.ID]) {
-            IssueViewController *ivc = [self createIssueViewControllerWithIssue:issue];
-            [self.issueViewControllers insertObject:ivc atIndex:idx];
-            [self.gridView insertItemsAtIndices:[NSIndexSet indexSetWithIndex:idx] withAnimation:AQGridViewItemAnimationNone];
-        }
-        [self setrefreshButtonEnabled:YES];
-    }];
+    if([self.issuesManager refresh]) {
+        self.issues = issuesManager.issues;
+        
+        [self.issues enumerateObjectsUsingBlock:^(id object, NSUInteger idx, BOOL *stop) {
+            // NOTE: this block changes the issueViewController array while looping
+            
+            IssueViewController *existingIvc = nil;
+            if (idx < [self.issueViewControllers count]) {
+                existingIvc = [self.issueViewControllers objectAtIndex:idx];
+            }
+            
+            BakerIssue *issue = (BakerIssue*)object;
+            if (!existingIvc || ![[existingIvc issue].ID isEqualToString:issue.ID]) {
+                IssueViewController *ivc = [self createIssueViewControllerWithIssue:issue];
+                [self.issueViewControllers insertObject:ivc atIndex:idx];
+                [self.gridView insertItemsAtIndices:[NSIndexSet indexSetWithIndex:idx] withAnimation:AQGridViewItemAnimationNone];
+            }
+        }];
+    }
+    [self setrefreshButtonEnabled:YES];
 }
 
 - (IBAction)handleInfo:(id)sender {
