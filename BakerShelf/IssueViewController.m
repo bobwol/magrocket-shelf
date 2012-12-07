@@ -37,6 +37,10 @@
 
 #import "UIColor+Extensions.h"
 
+#ifdef GOOGLE_ANALYTICS
+#import "GAI.h"
+#endif
+
 @implementation IssueViewController
 
 #pragma mark - Synthesis
@@ -286,9 +290,21 @@
     NSString *status = [self.issue getStatus];
     if ([status isEqualToString:@"remote"]) {
     #ifdef BAKER_NEWSSTAND
+        #ifdef GOOGLE_ANALYTICS
+                [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Issue"
+                                                                 withAction:nil
+                                                                  withLabel:[NSString stringWithFormat:@"Selected Download Issue: %@",self.issue.title]
+                                                                  withValue:nil];
+        #endif
         [self download];
     #endif
     } else if ([status isEqualToString:@"downloaded"] || [status isEqualToString:@"bundled"]) {
+        #ifdef GOOGLE_ANALYTICS
+                [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Issue"
+                                                                 withAction:nil
+                                                                  withLabel:[NSString stringWithFormat:@"Selected Read Issue: %@",self.issue.title]
+                                                                  withValue:nil];
+        #endif
         [self read];
     } else if ([status isEqualToString:@"downloading"]) {
         // TODO: assuming it is supported by NewsstandKit, implement a "Cancel" operation
@@ -384,6 +400,13 @@
         
         nkIssue = [nkLib addIssueWithName:name date:date];
         self.issue.path = [[nkIssue contentURL] path];
+        
+        #ifdef GOOGLE_ANALYTICS
+                [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Issue"
+                                                                 withAction:nil
+                                                                  withLabel:[NSString stringWithFormat:@"Selected Archive Issue: %@",self.issue.title]
+                                                                  withValue:nil];
+        #endif
         
         [self refresh];
     }

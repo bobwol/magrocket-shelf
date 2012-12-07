@@ -87,7 +87,7 @@
     #ifdef GOOGLE_ANALYTICS
 
         #define GOOGLE_WEB_PROPERTY_ID @"UA-36565388-1"
-        #define GOOGLE_DISPATCH_PERIOD_SECONDS 90
+        #define GOOGLE_DISPATCH_PERIOD_SECONDS 60
 
     #endif
 

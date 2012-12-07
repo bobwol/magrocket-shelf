@@ -163,12 +163,17 @@
     
     #endif
     
+    //#ifdef GOOGLE_ANALYTICS
+    //    [[GAI sharedInstance].defaultTracker track:@"Shelf Load"
+    //                                                     withAction:nil
+    //                                                      withLabel:NSLocalizedString(@"SHELF_NAVIGATION_TITLE", nil)
+    //                                                      withValue:nil];
+    //#endif
+    
     #ifdef GOOGLE_ANALYTICS
-        [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Shelf Load"
-                                                         withAction:nil
-                                                          withLabel:NSLocalizedString(@"SHELF_NAVIGATION_TITLE", nil)
-                                                          withValue:nil];
+        [[GAI sharedInstance].defaultTracker trackView:@"Shelf View"];
     #endif
+
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -299,6 +304,14 @@
             }
         }];
     }
+    
+    #ifdef GOOGLE_ANALYTICS
+        [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Shelf View"
+                                                         withAction:nil
+                                                          withLabel:@"Refresh Issues"
+                                                          withValue:nil];
+    #endif
+    
     [self setrefreshButtonEnabled:YES];
 }
 
@@ -351,6 +364,13 @@
                 [infoViewController release];
             }
     }
+    
+    #ifdef GOOGLE_ANALYTICS
+        [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Shelf View"
+                                                         withAction:nil
+                                                          withLabel:@"View App Info"
+                                                          withValue:nil];
+    #endif
     
     [self setInfoButtonEnabled:YES];
 }
@@ -414,6 +434,13 @@
     [self recordTransaction:transaction];
 
     [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+    
+    #ifdef GOOGLE_ANALYTICS
+        [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Shelf View"
+                                                         withAction:nil
+                                                          withLabel:@"Completed Free Subscription"
+                                                          withValue:nil];
+    #endif
 }
 
 -(void)recordTransaction:(SKPaymentTransaction *)transaction {
