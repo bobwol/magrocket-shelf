@@ -107,7 +107,7 @@
     btnGoForward.enabled = NO;
     btnGoForward.width = 30;
 
-    self.spinner = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
+    self.spinner = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite] autorelease];
     spinner.frame = CGRectMake(3, 3, 25, 25);
     spinner.hidesWhenStopped = YES;
 
