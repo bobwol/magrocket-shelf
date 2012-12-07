@@ -60,7 +60,7 @@
         // ----------------------------------------------------------------------------------------------------
         // Optional - This constant specifies the URL to ping back when a user subscribes.
         // E.g. @"http://example.com/subscribe"
-        #define PURCHASE_CONFIRMATION_URL @"http://api.newsstandadmin.com/subscribe/abe6d7fa-12e8-427e-b690-5b8e977dd8d1"
+        #define PURCHASE_CONFIRMATION_URL @"http://api.newsstandadmin.com/subscription/abe6d7fa-12e8-427e-b690-5b8e977dd8d1"
 
     #endif
 

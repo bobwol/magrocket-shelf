@@ -57,6 +57,7 @@
 @synthesize subscribeButton;
 @synthesize refreshButton;
 @synthesize infoButton;
+@synthesize responseData = _responseData;
 
 #pragma mark - Init
 
@@ -93,6 +94,7 @@
     [subscribeButton release];
     [refreshButton release];
     [infoButton release];
+    [_responseData release];
 
     [super dealloc];
 }
@@ -102,6 +104,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.responseData = [NSMutableData data];
     
     self.navigationItem.title = NSLocalizedString(@"SHELF_NAVIGATION_TITLE", nil);
 
@@ -421,23 +425,79 @@
                                   receiptData, @"receipt-data",
                                   nil];
         NSError *error = nil;
-        NSData *jsonData = [jsonDict JSONDataWithOptions:JKSerializeOptionNone error:&error];
-
+        
+        NSString *jsonRequest = [jsonDict JSONString];
+        
+        NSLog(@"jsonRequest is %@", jsonRequest);       
+        
+        NSData *requestData = [NSData dataWithBytes:[jsonRequest UTF8String] length:[jsonRequest length]];
+        
         if (error) {
             NSLog(@"Error generating receipt JSON: %@", error);
         } else {
             NSURL *requestURL = [NSURL URLWithString:PURCHASE_CONFIRMATION_URL];
             NSMutableURLRequest *req = [[NSMutableURLRequest alloc] initWithURL:requestURL];
+            
             [req setHTTPMethod:@"POST"];
-            [req setHTTPBody:jsonData];
-            NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:req delegate:nil];
+            [req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+            [req setHTTPBody:requestData];
+
+            NSURLConnection *conn = [[NSURLConnection alloc] initWithRequest:req delegate:self];
             if (conn) {
                 NSLog(@"Posting App Store transaction receipt to %@", PURCHASE_CONFIRMATION_URL);
             } else {
                 NSLog(@"Cannot connect to %@", PURCHASE_CONFIRMATION_URL);
             }
         }
+        
     }
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+        NSLog(@"didReceiveResponse");
+        [self.responseData setLength:0];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [self.responseData appendData:data];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    NSLog(@"didFailWithError");
+        NSLog([NSString stringWithFormat:@"Connection failed: %@", [error description]]);
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+        NSLog(@"connectionDidFinishLoading");
+        NSLog(@"Succeeded! Received %d bytes of data",[self.responseData length]);
+
+    NSString *data = [[[NSString alloc] initWithData:self.responseData encoding:NSASCIIStringEncoding] autorelease];
+    NSLog(@"%@", data);
+    
+        // convert to JSON
+        NSError *myError = nil;
+        NSDictionary *res = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&myError];
+
+        // show all values
+        for(id key in res) {
+    
+                id value = [res objectForKey:key];
+    
+                NSString *keyAsString = (NSString *)key;
+                NSString *valueAsString = (NSString *)value;
+    
+                NSLog(@"key: %@", keyAsString);
+                NSLog(@"value: %@", valueAsString);
+            }
+
+        // extract specific value...
+        //NSArray *results = [res objectForKey:@"success"];
+
+        //for (NSDictionary *result in results) {
+        //        NSString *message = [result objectForKey:@"message"];
+        //        NSLog(@"message: %@", message);
+        //}
+     
 }
 
 -(void)failedTransaction:(SKPaymentTransaction *)transaction {

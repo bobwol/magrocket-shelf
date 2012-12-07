@@ -51,6 +51,7 @@
 @property (strong, nonatomic) UIBarButtonItem *refreshButton;
 @property (strong, nonatomic) UIBarButtonItem *subscribeButton;
 @property (strong, nonatomic) UIBarButtonItem *infoButton;
+@property (nonatomic, strong) NSMutableData *responseData;
 
 #pragma mark - Init
 - (id)initWithBooks:(NSArray *)currentBooks;
