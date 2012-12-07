@@ -35,6 +35,8 @@
 		9E86C87B1662ED9C00EA6D80 /* InfoViewControlleriPhone5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E86C87A1662ED9C00EA6D80 /* InfoViewControlleriPhone5.xib */; };
 		9EA78E46166EFB510089FFE1 /* info.html in Resources */ = {isa = PBXBuildFile; fileRef = 9EA78E44166EFB510089FFE1 /* info.html */; };
 		9EA78E49166F08600089FFE1 /* infoimage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA78E48166F08600089FFE1 /* infoimage@2x.png */; };
+		9EBC104F167236E200BC312E /* newsstand.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EBC104D167236E200BC312E /* newsstand.png */; };
+		9EBC1050167236E200BC312E /* newsstand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EBC104E167236E200BC312E /* newsstand@2x.png */; };
 		9EDAD0C81662AE1F00CDF3C8 /* TPMultiLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EDAD0C71662AE1F00CDF3C8 /* TPMultiLayoutViewController.m */; };
 		9F1FC71316500A47002C8277 /* navigation-bar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FC71116500A47002C8277 /* navigation-bar-bg.png */; };
 		9F1FC71416500A47002C8277 /* navigation-bar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FC71216500A47002C8277 /* navigation-bar-bg@2x.png */; };
@@ -138,6 +140,8 @@
 		9E86C87A1662ED9C00EA6D80 /* InfoViewControlleriPhone5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InfoViewControlleriPhone5.xib; sourceTree = "<group>"; };
 		9EA78E44166EFB510089FFE1 /* info.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = info.html; path = html/info.html; sourceTree = "<group>"; };
 		9EA78E48166F08600089FFE1 /* infoimage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "infoimage@2x.png"; path = "html/infoimage@2x.png"; sourceTree = "<group>"; };
+		9EBC104D167236E200BC312E /* newsstand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newsstand.png; sourceTree = "<group>"; };
+		9EBC104E167236E200BC312E /* newsstand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newsstand@2x.png"; sourceTree = "<group>"; };
 		9EDAD0C61662AE1F00CDF3C8 /* TPMultiLayoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPMultiLayoutViewController.h; sourceTree = "<group>"; };
 		9EDAD0C71662AE1F00CDF3C8 /* TPMultiLayoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPMultiLayoutViewController.m; sourceTree = "<group>"; };
 		9EDC9AE216615FA5006AD4C6 /* UIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIConstants.h; sourceTree = "<group>"; };
@@ -344,6 +348,8 @@
 		9F58D85E15D6743C0027902C /* img */ = {
 			isa = PBXGroup;
 			children = (
+				9EBC104D167236E200BC312E /* newsstand.png */,
+				9EBC104E167236E200BC312E /* newsstand@2x.png */,
 				9E04E2741661252700095457 /* info-icon.png */,
 				9E04E2751661252700095457 /* info-icon@2x.png */,
 				9F1FC71116500A47002C8277 /* navigation-bar-bg.png */,
@@ -679,6 +685,8 @@
 				9E6BCAD31665A75F005BDFD5 /* Localizable.strings in Resources */,
 				9EA78E46166EFB510089FFE1 /* info.html in Resources */,
 				9EA78E49166F08600089FFE1 /* infoimage@2x.png in Resources */,
+				9EBC104F167236E200BC312E /* newsstand.png in Resources */,
+				9EBC1050167236E200BC312E /* newsstand@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
