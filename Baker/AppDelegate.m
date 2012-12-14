@@ -35,6 +35,7 @@
 #import "UICustomNavigationController.h"
 #import "UICustomNavigationBar.h"
 #import "ShelfManager.h"
+#import "Reachability.h"
 
 #ifdef BAKER_NEWSSTAND
 #import "IssuesManager.h"
@@ -82,12 +83,62 @@
 {
     self.window = [[[InterceptorWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     self.window.backgroundColor = [UIColor whiteColor];
-    
+                                
     #ifdef PARSE_SUPPORT
     
-    // PARSE FRAMEWORK SETUP
-    [Parse setApplicationId: PARSE_APPLICATION_ID
-                  clientKey: PARSE_CLIENT_KEY];
+        #warning Newsstand: Remember to set the below item to NO for Production Push Notification usage.
+        // Development Only.  Set to NO for Production.
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"NKDontThrottleNewsstandContentNotifications"];
+    
+        // PARSE FRAMEWORK SETUP
+        [Parse setApplicationId: PARSE_APPLICATION_ID
+                      clientKey: PARSE_CLIENT_KEY];
+        
+        // Register for push notifications
+        [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeNewsstandContentAvailability|UIRemoteNotificationTypeAlert];
+
+        // check if the application will run in background after being called by a push notification
+        NSDictionary *payload = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    
+        if(payload) {
+            NSLog(@"%@",payload);
+            
+            NSDictionary *aps = (NSDictionary *)[payload objectForKey:@"aps"];
+            
+            NSLog(@"%@",aps);
+            
+            // Now check if it is new content; if so we show an alert
+            if ([aps objectForKey:@"content-available"])
+            {
+                if([[UIApplication sharedApplication] applicationState]==UIApplicationStateActive) {
+                    // active app -> display an alert
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New MagRocket Issue"
+                                                                    message:@"There is a new issue available.  Click on the refresh icon to update the shelf view and download."
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"Close"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                    [alert release];
+                } else {
+                    // inactive app -> do something else (e.g. download the latest issue)
+                    // schedule for issue downloading in background
+                    // in this tutorial we hard-code background download of magazine-2, but normally the magazine to be downloaded
+                    // has to be provided in the push notification custom payload
+                    
+                    //NKIssue *issue4 = [[NKLibrary sharedLibrary] issueWithName:@"Magazine-2"];
+                    //if(issue4) {
+                    //    NSURL *downloadURL = [NSURL URLWithString:@"http://www.viggiosoft.com/media/data/blog/newsstand/magazine-2.pdf"];
+                    //    NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
+                    //    NKAssetDownload *assetDownload = [issue4 addAssetWithRequest:req];
+                    //    [assetDownload downloadWithDelegate:store];
+                    //}
+                }
+            }
+            else{
+                // This is not a content-available push.  Handle Normally.
+                [PFPush handlePush:payload];
+            }
+        }
 
     #endif
 
@@ -128,9 +179,74 @@
 
     self.window.rootViewController = self.rootNavigationController;
     [self.window makeKeyAndVisible];
+    
+    //From Viggiosoft.com Tutorial.  Investigate if this needs to be implemented.
+    //#ifdef BAKER_NEWSSTAND
+    //    //Check for existing pending downloads.  If any exist, reconnect them to the download delegate.
+    //    NKLibrary *nkLib = [NKLibrary sharedLibrary];
+    //    for(NKAssetDownload *asset in [nkLib downloadingAssets]) {
+    //        [asset downloadWithDelegate:store];
+    //    }
+    //#endif
 
     return YES;
 }
+
+#ifdef PARSE_SUPPORT
+    - (void)application:(UIApplication *)application
+    didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
+    {
+        // Send parse the device token
+        [PFPush storeDeviceToken:newDeviceToken];
+        
+        // Subscribe this user to the broadcast channel, ""
+        [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                NSLog(@"Successfully subscribed to the broadcast channel.");
+            } else {
+                NSLog(@"Failed to subscribe to the broadcast channel.");
+            }
+        }];
+    }
+
+    -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {       
+        NSDictionary *aps = (NSDictionary *)[userInfo objectForKey:@"aps"];
+        
+        NSLog(@"%@",aps);
+        
+        // Now check if it is new content; if so we show an alert
+        if ([aps objectForKey:@"content-available"])
+        {
+            if([[UIApplication sharedApplication] applicationState]==UIApplicationStateActive) {
+                // active app -> display an alert
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New MagRocket Issue"
+                                                                message:@"There is a new issue available.  Click on the refresh icon to update the shelf view and download."
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"Close"
+                                                      otherButtonTitles:nil];
+                [alert show];
+                [alert release];
+            } else {
+                // inactive app -> do something else (e.g. download the latest issue)
+                // schedule for issue downloading in background
+                // in this tutorial we hard-code background download of magazine-2, but normally the magazine to be downloaded
+                // has to be provided in the push notification custom payload
+                
+                //NKIssue *issue4 = [[NKLibrary sharedLibrary] issueWithName:@"Magazine-2"];
+                //if(issue4) {
+                //    NSURL *downloadURL = [NSURL URLWithString:@"http://www.viggiosoft.com/media/data/blog/newsstand/magazine-2.pdf"];
+                //    NSURLRequest *req = [NSURLRequest requestWithURL:downloadURL];
+                //    NKAssetDownload *assetDownload = [issue4 addAssetWithRequest:req];
+                //    [assetDownload downloadWithDelegate:store];
+                //}
+            }
+        }
+        else{
+            // This is not a content-available push.  Handle Normally.
+            [PFPush handlePush:userInfo];
+        }
+    }
+#endif
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

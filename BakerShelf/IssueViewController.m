@@ -34,6 +34,7 @@
 #import "IssueViewController.h"
 #import "SSZipArchive.h"
 #import "UIConstants.h"
+#import "Reachability.h"
 
 #import "UIColor+Extensions.h"
 
@@ -313,8 +314,20 @@
 #ifdef BAKER_NEWSSTAND
 - (void)download
 {
-    [self refresh:@"downloading"];
-    [self.issue downloadWithDelegate:self];
+    Reachability *reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    NetworkStatus internetStatus = [reach currentReachabilityStatus];
+    
+    if ((internetStatus != ReachableViaWiFi) && (internetStatus != ReachableViaWWAN))
+    {
+        UIAlertView *myAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_TITLE", nil) message:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE", nil)
+                                                         delegate:self cancelButtonTitle:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_CLOSE", nil) otherButtonTitles:nil];
+        [myAlert show];
+        [myAlert release];
+    }
+    else{
+        [self refresh:@"downloading"];
+        [self.issue downloadWithDelegate:self];
+    }
 }
 #endif
 - (void)read
@@ -331,46 +344,54 @@
 }
 - (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *)destinationURL
 {
-    #ifdef BAKER_NEWSSTAND
+#ifdef BAKER_NEWSSTAND
     NSLog(@"Connection did finish downloading %@", destinationURL);
-
+    
     NKAssetDownload *dnl = connection.newsstandAssetDownload;
     NKIssue *nkIssue = dnl.issue;
     NSString *destinationPath = [[nkIssue contentURL] path];
-
+    
     NSLog(@"File is being unzipped to %@", destinationPath);
     [SSZipArchive unzipFileAtPath:[destinationURL path] toDestination:destinationPath];
     
-    // Delete downloaded HPUB file
-    NSError *error;
-    
-    // Create file manager
+    NSLog(@"Removing temporary downloaded file %@", [destinationURL path]);
     NSFileManager *fileMgr = [NSFileManager defaultManager];
-    
-    // Attempt to delete the downloaded .HPUB file after it was unzipped
+    NSError *error;
     if ([fileMgr removeItemAtPath:[destinationURL path] error:&error] != YES){
         NSLog(@"Unable to delete file: %@", [error localizedDescription]);
     }
-    else{
-        NSLog(@"Deleted temporary downloaded file at location: %@", [destinationURL path]);
-    }
-
+    
     [self refresh];
-
+    
     // TODO: notify of new content with setApplicationIconBadgeNumber
-
+    
     BakerBook *book = [[BakerBook alloc]initWithBookPath:destinationPath bundled:NO];
     UIImage *coverImage = [UIImage imageWithContentsOfFile:[destinationPath stringByAppendingPathComponent:book.cover]];
     if (coverImage) {
         [[UIApplication sharedApplication] setNewsstandIconImage:coverImage];
     }
-    #endif
+#endif
 }
 - (void)connectionDidResumeDownloading:(NSURLConnection *)connection totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes
 {
     NSLog(@"Connection did resume downloading %lld %lld", totalBytesWritten, expectedTotalBytes);
 
     [self.progressBar setProgress:((float)totalBytesWritten/(float)expectedTotalBytes) animated:YES];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    NSLog(@"Connection error when trying to download %@: %@", [connection currentRequest].URL, [error localizedDescription]);
+    [connection cancel];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"DOWNLOAD_FAILED_TITLE", nil)
+                                                    message:NSLocalizedString(@"DOWNLOAD_FAILED_MESSAGE", nil)
+                                                   delegate:nil
+                                          cancelButtonTitle:NSLocalizedString(@"DOWNLOAD_FAILED_CLOSE", nil)
+                                          otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+    
+    [self refresh];
 }
 
 #pragma mark - Newsstand archive management

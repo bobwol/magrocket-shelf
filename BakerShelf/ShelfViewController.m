@@ -37,6 +37,7 @@
 #import "Constants.h"
 #import "InfoViewControlleriPad.h"
 #import "InfoViewControlleriPhone.h"
+#import "Reachability.h"
 
 #import "BakerViewController.h"
 #import "IssueViewController.h"
@@ -304,16 +305,22 @@
             }
         }];
     }
-    
-    #ifdef GOOGLE_ANALYTICS
-        [[GAI sharedInstance].defaultTracker trackEventWithCategory:@"Shelf View"
-                                                         withAction:nil
-                                                          withLabel:@"Refresh Issues"
-                                                          withValue:nil];
-    #endif
-    
+    else{
+        Reachability *reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+        NetworkStatus internetStatus = [reach currentReachabilityStatus];
+        
+        if ((internetStatus != ReachableViaWiFi) && (internetStatus != ReachableViaWWAN))
+        {
+            UIAlertView *myAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_TITLE", nil) message:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE", nil)
+                                                             delegate:self cancelButtonTitle:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_CLOSE", nil) otherButtonTitles:nil];
+            [myAlert show];
+            [myAlert release];
+        }
+    }
     [self setrefreshButtonEnabled:YES];
 }
+
+
 
 - (IBAction)handleInfo:(id)sender {
     [self setInfoButtonEnabled:NO];
@@ -498,8 +505,8 @@
         NSLog(@"connectionDidFinishLoading");
         NSLog(@"Succeeded! Received %d bytes of data",[self.responseData length]);
 
-    NSString *data = [[[NSString alloc] initWithData:self.responseData encoding:NSASCIIStringEncoding] autorelease];
-    NSLog(@"%@", data);
+        NSString *data = [[[NSString alloc] initWithData:self.responseData encoding:NSASCIIStringEncoding] autorelease];
+        NSLog(@"%@", data);
     
         // convert to JSON
         NSError *myError = nil;

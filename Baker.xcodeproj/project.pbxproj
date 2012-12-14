@@ -37,6 +37,7 @@
 		9EA78E49166F08600089FFE1 /* infoimage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA78E48166F08600089FFE1 /* infoimage@2x.png */; };
 		9EBC104F167236E200BC312E /* newsstand.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EBC104D167236E200BC312E /* newsstand.png */; };
 		9EBC1050167236E200BC312E /* newsstand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EBC104E167236E200BC312E /* newsstand@2x.png */; };
+		9EC149B016776FF60091A6D4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC149AF16776FF60091A6D4 /* Reachability.m */; };
 		9EDAD0C81662AE1F00CDF3C8 /* TPMultiLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EDAD0C71662AE1F00CDF3C8 /* TPMultiLayoutViewController.m */; };
 		9F1FC71316500A47002C8277 /* navigation-bar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FC71116500A47002C8277 /* navigation-bar-bg.png */; };
 		9F1FC71416500A47002C8277 /* navigation-bar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FC71216500A47002C8277 /* navigation-bar-bg@2x.png */; };
@@ -142,6 +143,8 @@
 		9EA78E48166F08600089FFE1 /* infoimage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "infoimage@2x.png"; path = "html/infoimage@2x.png"; sourceTree = "<group>"; };
 		9EBC104D167236E200BC312E /* newsstand.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = newsstand.png; sourceTree = "<group>"; };
 		9EBC104E167236E200BC312E /* newsstand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "newsstand@2x.png"; sourceTree = "<group>"; };
+		9EC149AE16776FF60091A6D4 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		9EC149AF16776FF60091A6D4 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		9EDAD0C61662AE1F00CDF3C8 /* TPMultiLayoutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPMultiLayoutViewController.h; sourceTree = "<group>"; };
 		9EDAD0C71662AE1F00CDF3C8 /* TPMultiLayoutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPMultiLayoutViewController.m; sourceTree = "<group>"; };
 		9EDC9AE216615FA5006AD4C6 /* UIConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIConstants.h; sourceTree = "<group>"; };
@@ -378,6 +381,8 @@
 				9F5EB3BC15FCA3A100E13796 /* NSString+Extensions.m */,
 				9FAB40D8162B13CF0088E9C1 /* UIColor+Extensions.h */,
 				9FAB40D9162B13CF0088E9C1 /* UIColor+Extensions.m */,
+				9EC149AE16776FF60091A6D4 /* Reachability.h */,
+				9EC149AF16776FF60091A6D4 /* Reachability.m */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -737,6 +742,7 @@
 				9E04E270166122B400095457 /* InfoViewControlleriPad.m in Sources */,
 				9E04E272166122B400095457 /* InfoViewControlleriPhone.m in Sources */,
 				9EDAD0C81662AE1F00CDF3C8 /* TPMultiLayoutViewController.m in Sources */,
+				9EC149B016776FF60091A6D4 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -759,6 +765,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Andrew Krowczyk (2B5A4K4XMZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -774,6 +781,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PROVISIONING_PROFILE = "6B59407A-5FFB-4259-AA99-E7D906D5738F";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -784,6 +792,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Andrew Krowczyk (2B5A4K4XMZ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -793,6 +802,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "6B59407A-5FFB-4259-AA99-E7D906D5738F";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -802,6 +812,7 @@
 		ABAFB5B515AB9A2F002FA498 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -816,6 +827,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -824,6 +836,7 @@
 		ABAFB5B615AB9A2F002FA498 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -838,6 +851,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
