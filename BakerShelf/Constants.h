@@ -49,7 +49,7 @@
         // Mandatory - This constant defines where the JSON file containing all the publications is located.
         // For more information on this file, see: https://github.com/Simbul/baker/wiki/Newsstand-shelf-JSON
         // E.g. @"http://example.com/books.json"
-        #define NEWSSTAND_MANIFEST_URL @"http://api.newsstandadmin.com/issues/abe6d7fa-12e8-427e-b690-5b8e977dd8d1"
+        #define NEWSSTAND_MANIFEST_URL @"http://api.magrocket.com/issues/abe6d7fa-12e8-427e-b690-5b8e977dd8d1"
 
         // ----------------------------------------------------------------------------------------------------
         // Mandatory - This constant identifies the subscription you set up in iTunesConnect.
@@ -60,7 +60,7 @@
         // ----------------------------------------------------------------------------------------------------
         // Optional - This constant specifies the URL to ping back when a user subscribes.
         // E.g. @"http://example.com/subscribe"
-        #define PURCHASE_CONFIRMATION_URL @"http://api.newsstandadmin.com/subscription/abe6d7fa-12e8-427e-b690-5b8e977dd8d1"
+        #define PURCHASE_CONFIRMATION_URL @"http://api.magrocket.com/subscription/abe6d7fa-12e8-427e-b690-5b8e977dd8d1"
 
     #endif
 

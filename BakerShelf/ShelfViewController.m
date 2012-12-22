@@ -311,10 +311,13 @@
         
         if ((internetStatus != ReachableViaWiFi) && (internetStatus != ReachableViaWWAN))
         {
-            UIAlertView *myAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_TITLE", nil) message:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE", nil)
-                                                             delegate:self cancelButtonTitle:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_CLOSE", nil) otherButtonTitles:nil];
-            [myAlert show];
-            [myAlert release];
+            UIAlertView *connAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_TITLE", nil)
+                                                                message:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_MESSAGE", nil)
+                                                               delegate:self
+                                                      cancelButtonTitle:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_CLOSE", nil)
+                                                      otherButtonTitles:nil];
+            [connAlert show];
+            [connAlert release];
         }
     }
     [self setrefreshButtonEnabled:YES];

@@ -199,6 +199,17 @@
     self.progressBar.progressTintColor = [UIColor colorWithHexString:ISSUES_PROGRESSBAR_TINT_COLOR];
     
     [self.view addSubview:progressBar];
+    
+    #ifdef BAKER_NEWSSTAND
+        // RESUME PENDING NEWSSTAND DOWNLOAD
+        NKLibrary *nkLib = [NKLibrary sharedLibrary];
+        for (NKAssetDownload *asset in [nkLib downloadingAssets]) {
+            if ([asset.issue.name isEqualToString:self.issue.ID]) {
+                NSLog(@"Resuming abandoned Newsstand download: %@", asset.issue.name);
+                [asset downloadWithDelegate:self];
+            }
+        }
+    #endif
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -224,6 +235,17 @@
         self.archiveButton.hidden = YES;
         self.progressBar.hidden = YES;
         self.loadingLabel.hidden = YES;
+    }
+    else if ([status isEqualToString:@"connecting"])
+    {
+        [self.spinner startAnimating];
+        
+        self.actionButton.hidden = YES;
+        self.archiveButton.hidden = YES;
+        self.progressBar.progress = 0;
+        self.loadingLabel.text = NSLocalizedString(@"CONNECTING_TEXT", nil);
+        self.loadingLabel.hidden = NO;
+        self.progressBar.hidden = YES;
     }
     else if ([status isEqualToString:@"downloading"])
     {
@@ -314,20 +336,21 @@
 #ifdef BAKER_NEWSSTAND
 - (void)download
 {
-    Reachability *reach = [Reachability reachabilityWithHostname:@"www.google.com"];
-    NetworkStatus internetStatus = [reach currentReachabilityStatus];
+    //Take out check for now.
+    //Reachability *reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    //NetworkStatus internetStatus = [reach currentReachabilityStatus];
     
-    if ((internetStatus != ReachableViaWiFi) && (internetStatus != ReachableViaWWAN))
-    {
-        UIAlertView *myAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_TITLE", nil) message:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE", nil)
-                                                         delegate:self cancelButtonTitle:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_CLOSE", nil) otherButtonTitles:nil];
-        [myAlert show];
-        [myAlert release];
-    }
-    else{
-        [self refresh:@"downloading"];
+    //if ((internetStatus != ReachableViaWiFi) && (internetStatus != ReachableViaWWAN))
+    //{
+    //    UIAlertView *myAlert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_TITLE", nil) //message:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE", nil)
+    //                                                     delegate:self cancelButtonTitle:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_CLOSE", nil) otherButtonTitles:nil];
+    //    [myAlert show];
+    //    [myAlert release];
+    //}
+    //else{
+        [self refresh:@"connecting"];
         [self.issue downloadWithDelegate:self];
-    }
+    //}
 }
 #endif
 - (void)read
@@ -340,6 +363,10 @@
 
 - (void)connection:(NSURLConnection *)connection didWriteData:(long long)bytesWritten totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes
 {
+    // TODO: use a better check (ideally check that status is "connecting" instead of relying on a UI property)
+    if (self.progressBar.hidden) {
+        [self refresh:@"downloading"];
+    }
     [self.progressBar setProgress:((float)totalBytesWritten/(float)expectedTotalBytes) animated:YES];
 }
 - (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *)destinationURL
@@ -375,8 +402,6 @@
 - (void)connectionDidResumeDownloading:(NSURLConnection *)connection totalBytesWritten:(long long)totalBytesWritten expectedTotalBytes:(long long)expectedTotalBytes
 {
     NSLog(@"Connection did resume downloading %lld %lld", totalBytesWritten, expectedTotalBytes);
-
-    [self.progressBar setProgress:((float)totalBytesWritten/(float)expectedTotalBytes) animated:YES];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {

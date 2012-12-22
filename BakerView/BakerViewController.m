@@ -176,19 +176,25 @@
         
         // ****** LISTENER FOR CLOSING APPLICATION
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleApplicationWillResignActive:) name:@"applicationWillResignActiveNotification" object:nil];
-        
-        [self startReading];
     }
-    
-    currentPageWillAppearUnderModal = NO;
 }
 - (void)handleApplicationWillResignActive:(NSNotification *)notification {
     NSLog(@"RESIGN, SAVING");
     [self saveBookStatusWithScrollIndex];
 }
 - (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self performSelector:@selector(hideBars:) withObject:[NSNumber numberWithBool:YES] afterDelay:0.5];
+    
+    if (!currentPageWillAppearUnderModal) {
+        
+        [super viewDidAppear:animated];
+        
+        [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0];
+        [self performSelector:@selector(hideBars:) withObject:[NSNumber numberWithBool:YES] afterDelay:0.5];
+        
+        [self startReading];
+    }
+    
+    currentPageWillAppearUnderModal = NO;
 }
 - (BOOL)loadBookWithBookPath:(NSString *)bookPath {
     NSLog(@"• LOAD BOOK WITH PATH: %@", bookPath);
@@ -295,9 +301,9 @@
 }
 - (void)startReading {
     
-    [self setPageSize:[self getCurrentInterfaceOrientation:self.interfaceOrientation]];
+    //[self setPageSize:[self getCurrentInterfaceOrientation:self.interfaceOrientation]];
     [self buildPageDetails];
-    [self updateBookLayout];
+    //[self updateBookLayout];
     
     // ****** INDEX WEBVIEW INIT
     // we move it here to make it more clear and clean
@@ -1480,10 +1486,12 @@
     
     NSDictionary *userInfo = notification.userInfo;
     UITouch *touch = [userInfo objectForKey:@"touch"];
+    BOOL shouldPropagateIndexInterceptedTouch = NO;
     
     if (touch.phase == UITouchPhaseBegan) {
         userIsScrolling = NO;
         shouldPropagateInterceptedTouch = ([touch.view isDescendantOfView:scrollView]);
+        shouldPropagateIndexInterceptedTouch = [touch.view isDescendantOfView:indexViewController.view];
     } else if (touch.phase == UITouchPhaseMoved) {
         userIsScrolling = YES;
     }
@@ -1493,6 +1501,11 @@
             [self userDidScroll:touch];
         } else if (touch.phase == UITouchPhaseEnded) {
             [self userDidTap:touch];
+        }
+    } else if (shouldPropagateIndexInterceptedTouch) {
+        if (touch.tapCount == 2) {
+            NSLog(@" Index Multi Tap TOGGLE STATUS BAR");
+            [self toggleBars];
         }
     }
 }
@@ -1698,8 +1711,8 @@
 
 #pragma mark - ORIENTATION
 - (NSString *)getCurrentInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    if ([availableOrientation isEqualToString:@"portrait"] || [availableOrientation isEqualToString:@"landscape"]) {
-        return availableOrientation;
+    if ([book.orientation isEqualToString:@"portrait"] || [book.orientation isEqualToString:@"landscape"]) {
+        return book.orientation;
     } else {
         if (UIInterfaceOrientationIsLandscape(interfaceOrientation)) {
             return @"landscape";
@@ -1708,19 +1721,10 @@
         }
     }
 }
-- (NSInteger)supportedInterfaceOrientations {
-    if ([availableOrientation isEqualToString:@"portrait"]) {
-        return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationPortraitUpsideDown);
-    } else if ([availableOrientation isEqualToString:@"landscape"]) {
-        return UIInterfaceOrientationMaskLandscape;
-    } else {
-        return UIInterfaceOrientationMaskAll;
-    }
-}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    if ([availableOrientation isEqualToString:@"portrait"]) {
+    if ([book.orientation isEqualToString:@"portrait"]) {
         return UIInterfaceOrientationIsPortrait(interfaceOrientation);
-    } else if ([availableOrientation isEqualToString:@"landscape"]) {
+    } else if ([book.orientation isEqualToString:@"landscape"]) {
         return UIInterfaceOrientationIsLandscape(interfaceOrientation);
     } else {
         return YES;
@@ -1728,6 +1732,15 @@
 }
 - (BOOL)shouldAutorotate {
     return YES;
+}
+- (NSInteger)supportedInterfaceOrientations {
+    if ([book.orientation isEqualToString:@"portrait"]) {
+        return (UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown);
+    } else if ([book.orientation isEqualToString:@"landscape"]) {
+        return UIInterfaceOrientationMaskLandscape;
+    } else {
+        return UIInterfaceOrientationMaskAll;
+    }
 }
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     // Notify the index view
@@ -1745,7 +1758,6 @@
     [indexViewController rotateFromOrientation:fromInterfaceOrientation toOrientation:self.interfaceOrientation];
     [self setCurrentPageHeight];
 }
-
 #pragma mark - MEMORY
 - (void)viewWillDisappear:(BOOL)animated {
     [self saveBookStatusWithScrollIndex];
