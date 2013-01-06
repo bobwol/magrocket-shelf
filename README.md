@@ -1,8 +1,8 @@
 MagRocket
 =============
 
-**The HTML5 ebook framework to publish interactive books & magazines on iPad & iPhone using simply open web standards**  
-<http://bakerframework.com>  
+**End to End solution for publishing and managing Baker based Newsstand applications.**  
+<http://magrocket.com>  
 
 
 
@@ -15,5 +15,7 @@ LICENSE
 -------
 
   _Copyright (C) 2013 NIN9 Creative, LLC for enhancements and modifications to the Baker Shelf Framework_
+  
   _Copyright (C) 2010-2013 Davide Casali, Marco Colombo, Alessandro Morandi for base Baker Shelf Framework (BSD Open Source License) _  
+  
   _Licensed under **GPL Open Source License** (free for personal and commercial use as long as derivative works are also open source)_
