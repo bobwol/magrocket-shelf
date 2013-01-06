@@ -14,7 +14,7 @@ Based in part on the popular Baker Framework, MagRocket is an Open Source custom
 LICENSE
 -------
 
-  _Copyright (C) 2013 NIN9 Creative, LLC for enhancements and modifications to the Baker Framework_
+  _Copyright (C) 2013 NIN9 Creative, LLC (Andrew Krowczyk) for enhancements and modifications to the Baker Framework_
   
   _Copyright (C) 2010-2013 Davide Casali, Marco Colombo, Alessandro Morandi for base Baker Framework_  
   
